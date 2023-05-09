@@ -7,7 +7,7 @@ abstract class InjectionState<W extends StatefulWidget, B extends Object>
     extends State<W> {
   late final B _controller;
 
-  ScaffoldContainer get container;
+  InjectionContainer get container;
 
   B get controller => _controller;
 

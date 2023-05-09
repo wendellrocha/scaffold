@@ -4,10 +4,10 @@ import 'package:get_it/get_it.dart';
 
 typedef Injection = void Function(GetIt i);
 
-abstract class ScaffoldContainer {
+abstract class InjectionContainer {
   final String scope;
 
-  const ScaffoldContainer({required this.scope});
+  const InjectionContainer({required this.scope});
 
   List<Injection> get binds;
 

@@ -54,7 +54,7 @@
 - Store: A basic store that emits states
 
   ```dart
-  class MyCubit extends ScaffoldStore<List<int>> {
+  class MyCubit extends Store<List<int>> {
       final MyUseCase _useCase;
 
       MyCubit(this._useCase);
@@ -66,7 +66,7 @@
 - ScaffoldState: A state that init your container and controller and clear on dispose
 
   ```dart
-  class _TodosPageState extends ScaffoldState<TodosPage, TodosController> {
+  class _TodosPageState extends InjectionState<TodosPage, TodosController> {
     @override
     ScaffoldContainer get container => TodosContainer();
 
@@ -77,3 +77,37 @@
     }
   }
   ```
+
+- InjectionContainer: A container to inject dependencies
+
+    ```dart
+    class TodosContainer extends InjectionContainer {
+        TodosContainer() : super(scope: 'todos');
+
+        @override
+        List<Injection> get binds => [
+                (i) => i.registerLazySingleton<TodoDatasource>(
+                    () => TodoDatasourceImpl(
+                        i.get(),
+                    ),
+                    ),
+                (i) => i.registerLazySingleton<TodoRepository>(
+                    () => TodoRepositoryImpl(
+                        i.get(),
+                    ),
+                    ),
+                (i) => i.registerLazySingleton<TodoUseCase>(
+                    () => TodoUseCaseImpl(
+                        i.get(),
+                    ),
+                    ),
+                (i) => i.registerLazySingleton<TodosCubit>(
+                    () => TodosCubit(
+                        i.get(),
+                    ),
+                    ),
+                (i) => i.registerLazySingleton<TodosController>(
+                    () => TodosController(i.get())),
+            ];
+    }
+    ```
