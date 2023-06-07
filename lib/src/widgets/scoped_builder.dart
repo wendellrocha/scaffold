@@ -19,23 +19,13 @@ class ScopedBuilder<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget child = const SizedBox();
-
-    return BlocBuilder(
+    return BlocBuilder<Cubit<AbstractState>, AbstractState>(
       bloc: cubit,
-      builder: (context, state) {
-        if (state is LoadingState) {
-          child = onLoading.call(context);
-          return child;
-        }
-
-        if (state is ErrorState) {
-          child = onError.call(context, state);
-          return child;
-        }
-
-        child = onSuccess.call(context, state as LoadedState<T>);
-        return child;
+      builder: (context, state) => switch (state) {
+        InitialState _ => const SizedBox.shrink(),
+        LoadingState _ => onLoading(context),
+        ErrorState state => onError.call(context, state),
+        LoadedState state => onSuccess.call(context, state as LoadedState<T>)
       },
     );
   }

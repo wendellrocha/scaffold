@@ -1,18 +1,18 @@
 import 'package:equatable/equatable.dart';
 
-abstract class AbstractState extends Equatable {}
+sealed class AbstractState extends Equatable {}
 
-class InitialState extends AbstractState {
+final class InitialState extends AbstractState {
   @override
   List<Object?> get props => [];
 }
 
-class LoadingState extends AbstractState {
+final class LoadingState extends AbstractState {
   @override
   List<Object?> get props => [];
 }
 
-class ErrorState extends AbstractState {
+final class ErrorState extends AbstractState {
   final String message;
 
   ErrorState(this.message);
@@ -21,7 +21,7 @@ class ErrorState extends AbstractState {
   List<Object?> get props => [];
 }
 
-class LoadedState<T> extends AbstractState {
+final class LoadedState<T> extends AbstractState {
   final T content;
 
   LoadedState(this.content);
