@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:scaffold/src/error/failure.dart';
 
 sealed class AbstractState extends Equatable {}
 
@@ -13,12 +14,12 @@ final class LoadingState extends AbstractState {
 }
 
 final class ErrorState extends AbstractState {
-  final String message;
+  final Failure error;
 
-  ErrorState(this.message);
+  ErrorState(this.error);
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [error];
 }
 
 final class LoadedState<T> extends AbstractState {
